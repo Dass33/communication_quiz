@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useGame } from "./GameContext";
 import { useGameLoop } from "./GameLoopContext";
+import logo from "./assets/logo.svg"
 
 
 function RoundEnd() {
@@ -22,29 +23,32 @@ function RoundEnd() {
 
     return (
         <div className="flex flex-col h-screen-dvh text-figma-black bg-white">
-            <div className="flex flex-col h-screen-dvh max-h-[50rem]">
-                <div className="flex flex-col w-full md:w-[40rem] mx-auto">
+            <img className="hidden xl:block w-28 fixed right-8 top-5" src={logo} alt="logo" />
+            <div className="flex flex-col h-screen-dvh">
+                <div className="flex flex-col w-full mx-auto">
 
                     <div className={`lg:pt-12 py-2 bg-${currColor} px-5`}>
-                        <div className="flex flex-row items-center">
-                            <span className="text-figma-white font-bold text-[2rem]">{round}</span>
-                            <div className="w-full bg-white bg-opacity-20 h-2 mx-6">
-                                <div
-                                    className="bg-figma-white h-2"
-                                    style={{ width: `${round * 10}%` }}
-                                ></div>
+                        <div className="mx-auto max-h-[50rem]  md:w-[40rem]">
+                            <div className="flex flex-row items-center">
+                                <span className="text-figma-white font-bold text-[2rem]">{round}</span>
+                                <div className="w-full bg-white bg-opacity-20 h-2 mx-6">
+                                    <div
+                                        className="bg-figma-white h-2"
+                                        style={{ width: `${round * 10}%` }}
+                                    ></div>
+                                </div>
                             </div>
-                        </div>
 
-                        <p className="mb-3 mt-7 text-figma-white text-[1rem] text-start font-bold">
-                            {isCorrect
-                                ? configData.correctAnswer
-                                : configData.wrongAnswer
-                            }
-                        </p>
+                            <p className="mb-3 mt-7 text-figma-white text-[1rem] text-start font-bold">
+                                {isCorrect
+                                    ? configData.correctAnswer
+                                    : configData.wrongAnswer
+                                }
+                            </p>
+                        </div>
                     </div>
 
-                    <div className="flex flex-col mx-5 p-2 my-6 border-black border rounded-lg">
+                    <div className="md:mx-auto max-h-[50rem]  md:w-[40rem] mx-2 p-2 my-6 border-black border rounded-lg">
                         {currQuestion.answerDescription}
                     </div>
 
@@ -84,31 +88,33 @@ function Question() {
     currQuestion.answers.forEach((answer, idx) => {
         shuffledAnswers[(answersShift[round - 1] + idx) % 4] = answer
     })
-    console.log(shuffledAnswers)
     const currColor = figmaColors[(round - 1) % figmaColors.length]
 
     return (
         <div className="flex flex-col h-screen-dvh text-figma-black bg-white">
-            <div className="flex flex-col h-screen-dvh max-h-[50rem]">
-                <div className="flex flex-col w-full md:w-[40rem] mx-auto">
+            <img className="hidden xl:block w-28 fixed right-8 top-5" src={logo} alt="logo" />
+            <div className="flex flex-col h-screen-dvh">
+                <div className="flex flex-col w-full">
 
                     <div className={`lg:pt-12 py-2 bg-${currColor} px-5`}>
-                        <div className="flex flex-row items-center">
-                            <span className="text-figma-white font-bold text-[2rem]">{round}</span>
-                            <div className="w-full bg-white bg-opacity-20 h-2 mx-6">
-                                <div
-                                    className="bg-figma-white h-2"
-                                    style={{ width: `${round * 10}%` }}
-                                ></div>
+                        <div className="mx-auto max-h-[50rem]  md:w-[40rem]">
+                            <div className="flex flex-row items-center">
+                                <span className="text-figma-white font-bold text-[2rem]">{round}</span>
+                                <div className="w-full bg-white bg-opacity-20 h-2 mx-6">
+                                    <div
+                                        className="bg-figma-white h-2"
+                                        style={{ width: `${round * 10}%` }}
+                                    ></div>
+                                </div>
                             </div>
-                        </div>
 
-                        <p className="my-3 text-figma-white font-medium text-lg text-start">
-                            {currQuestion.question}
-                        </p>
+                            <p className="my-3 text-figma-white font-medium text-lg text-start">
+                                {currQuestion.question}
+                            </p>
+                        </div>
                     </div>
 
-                    <div className="flex flex-col mx-5 gap-4 my-4">
+                    <div className="flex flex-col mx-5 gap-4 my-4 md:mx-auto md:w-[40rem]">
                         {shuffledAnswers.map((answer, index) => (
                             <label
                                 key={index}

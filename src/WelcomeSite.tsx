@@ -12,16 +12,16 @@ function LandingSite() {
 
     if (configData === null) {
         return (
-            <div className="bg-figma-black h-screen-dvh">
+            <div className="bg-csas-blue h-screen-dvh">
                 <h1 className="text-center pt-36 lg:pt-56 text-white">Loading...</h1>
             </div>
         );
     }
 
     return (
-        <div className="flex flex-col justify-between h-screen-dvh safe-padding bg-csas-blue px-8 max-h-[50rem]">
-            <div className="w-[20rem]">
-                <h1 className="font-bold text-figma-white text-left mt-48 text-[3rem]">{configData.gameTitle}</h1>
+        <div className="flex flex-col justify-between h-screen-dvh safe-padding bg-csas-blue px-6 xl:px-16">
+            <div className="w-[20rem] xl:w-[33rem]">
+                <h1 className="font-bold text-figma-white text-left mt-32 xl:mt-16 text-[3rem] xl:text-[5.25rem]">{configData.gameTitle}</h1>
             </div>
 
 
