@@ -11,6 +11,8 @@ interface GameState {
     setShowLandingSite: Function,
     showInstructions: boolean,
     setShowInstructions: Function,
+    showResults: boolean,
+    setShowResults: Function,
 }
 
 const GameContext = createContext<GameState | undefined>(undefined);
@@ -21,6 +23,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [round, setRound] = useState(1);
     const [showLandingSite, setShowLandingSite] = useState(true);
     const [showInstructions, setShowInstructions] = useState(false);
+    const [showResults, setShowResults] = useState(true)
 
     return (
         <GameContext.Provider value={{
@@ -29,6 +32,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
             round, setRound,
             showLandingSite, setShowLandingSite,
             showInstructions, setShowInstructions,
+            showResults, setShowResults
         }}>
             {children}
         </GameContext.Provider>

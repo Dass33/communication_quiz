@@ -15,6 +15,7 @@ function RoundEnd() {
         score,
         roundsCount,
         figmaColors,
+        wrongAnswers, setWrongAnswers
     } = useGameLoop();
 
     const currQuestion = shuffledQuestions[round - 1];
@@ -64,6 +65,10 @@ function RoundEnd() {
                         setShowRoundEnd(false)
                         setRound(round + 1)
                         if (isCorrect) setScore(score + 1)
+                        else {
+                            console.log(wrongAnswers)
+                            setWrongAnswers([...wrongAnswers, round - 1])
+                        }
                         if (round === roundsCount) setEndGame(true)
                     }}>
                     {"->"} {configData.buttonNext}
