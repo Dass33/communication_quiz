@@ -32,6 +32,11 @@ interface config {
     powerConsumption: string;
     reclamation: string;
     executor: string;
+    skoalaLink: string;
+    allCorrectURL: string;
+    powerConsumptionURL: string;
+    reclamationURL: string;
+    executorURL: string;
 }
 
 interface question {
@@ -40,6 +45,7 @@ interface question {
     answers: [string, string, string, string],
     answerDescription: string,
     recommendation: string,
+    recommendationURL: string,
 }
 
 interface treshold {

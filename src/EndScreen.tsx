@@ -3,18 +3,18 @@ import { useGameLoop } from "./GameLoopContext";
 import logo from "./assets/logo.svg"
 import logo_black from "./assets/logo_black.svg";
 
-function splitLastWord(input: string): [string, string] {
+function splitRec(input: string): [string, string] {
     const trimmed = input.trim();
-    const lastSpaceIndex = trimmed.lastIndexOf(' ');
+    const words = trimmed.split(' ').filter(word => word.length > 0);
 
-    if (lastSpaceIndex === -1) {
+    if (words.length <= 3) {
         return ['', trimmed];
     }
 
-    const start = trimmed.substring(0, lastSpaceIndex);
-    const lastWord = trimmed.substring(lastSpaceIndex + 1);
+    const lastThreeWords = words.slice(-3).join(' ');
+    const start = words.slice(0, -3).join(' ');
 
-    return [start, lastWord];
+    return [start, lastThreeWords];
 }
 
 function Recomendations() {
@@ -24,18 +24,19 @@ function Recomendations() {
         wrongAnswers,
         shuffledQuestions
     } = useGameLoop();
-    let selected_recomendations: [string, string][] = [];
+    let selected_recomendations: [string, string, string][] = [];
 
     if (score == roundsCount) {
-        selected_recomendations.push(splitLastWord(configData.allCorrect))
+        selected_recomendations.push([...splitRec(configData.allCorrect), configData.allCorrectURL])
     } else if (score < 7) {
-        selected_recomendations.push(splitLastWord(configData.powerConsumption))
-        selected_recomendations.push(splitLastWord(configData.reclamation))
-        selected_recomendations.push(splitLastWord(configData.executor))
+        selected_recomendations.push([...splitRec(configData.powerConsumption), configData.powerConsumptionURL])
+        selected_recomendations.push([...splitRec(configData.reclamation), configData.reclamationURL])
+        selected_recomendations.push([...splitRec(configData.executor), configData.executorURL])
     } else {
         wrongAnswers.forEach(item => (
-            selected_recomendations.push(splitLastWord(shuffledQuestions[item].recommendation)
-            )))
+            selected_recomendations.push([...splitRec(shuffledQuestions[item].recommendation),
+            shuffledQuestions[item].recommendationURL])
+        ))
     }
 
     return (
@@ -50,20 +51,20 @@ function Recomendations() {
                         </div>
                     </div>
 
-                    <div className="md:mx-auto max-h-[50rem]  md:w-[40rem] mx-2 p-2 my-6">
+                    <div className="md:mx-auto max-h-[50rem]  md:w-[40rem] mx-2 p-2 mb-6">
                         {selected_recomendations.map(item => (
-                            <div key={item[1]}>
+                            <div key={item[1]} className="flex flex-col items-center">
                                 <p className="md:mx-auto md:w-[40rem] mx-4 mt-6 mb-1 text-xl text-center">
                                     {item[0]}
                                 </p>
-                                <h3 className="md:mx-auto md:w-[40rem] mx-4 mb-4 text-xl text-center font-bold">
+                                <a href={item[2]} className="md:mx-auto md:w-[40rem] mx-4 mb-3 text-xl text-center font-bold">
                                     {item[1]}
-                                </h3>
+                                </a>
                             </div>
                         ))}
                     </div>
 
-                    <a href="https://skoala.cz/katalog" className="md:mx-auto md:w-[40rem] mx-8 p-2 my-6 font-extrabold text-xl text-center">
+                    <a href={configData.skoalaLink} className="md:mx-auto md:w-[40rem] mx-8 p-2 mb-3 mt-2 font-extrabold text-xl text-center">
                         {configData.shareToOthers}
                     </a>
 
