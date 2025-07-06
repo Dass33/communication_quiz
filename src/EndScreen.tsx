@@ -57,7 +57,7 @@ function Recomendations() {
                                 <p className="md:mx-auto md:w-[40rem] mx-4 mt-6 mb-1 text-xl text-center">
                                     {item[0]}
                                 </p>
-                                <a href={item[2]} className="md:mx-auto md:w-[40rem] mx-4 mb-3 text-xl text-center font-bold">
+                                <a href={item[2]} className="underline md:mx-auto md:w-[40rem] mx-4 mb-3 text-xl text-center font-bold">
                                     {item[1]}
                                 </a>
                             </div>
