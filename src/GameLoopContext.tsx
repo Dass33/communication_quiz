@@ -3,7 +3,6 @@ import { getJsObjects } from "./fetchJson";
 
 interface config {
     textPlay: string;
-    roundsAmount: number;
     copyright: string;
     buttonNext: string;
     buttonPrev: string;
@@ -26,17 +25,21 @@ interface config {
     prettyURL: string;
     resultsText: string;
     forYou: string;
-    recommendation: string;
+    recommendationTitle: string;
+    recommendationText: string;
     shareToOthers: string;
     allCorrect: string;
     powerConsumption: string;
     reclamation: string;
     executor: string;
-    skoalaLink: string;
-    allCorrectURL: string;
+    quizLink: string;
+    investingURL: string;
     powerConsumptionURL: string;
-    reclamationURL: string;
+    guessGameURL: string;
     executorURL: string;
+    ministerURL: string;
+    helpToSpreadText: string;
+    copiedText: string;
 }
 
 interface question {

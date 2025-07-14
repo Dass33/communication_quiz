@@ -1,74 +1,81 @@
 import { useGame } from "./GameContext";
 import { useGameLoop } from "./GameLoopContext";
 import logo from "./assets/logo.svg"
-import logo_black from "./assets/logo_black.svg";
+import badge_0 from "./assets/statecnyzkousec.svg";
+import badge_1 from "./assets/nahodilitrefovac.svg";
+import badge_2 from "./assets/financninovacek.svg";
+import badge_3 from "./assets/financniznalec.svg";
+import badge_4 from "./assets/financniborec.svg";
+import badge_5 from "./assets/financniguru.svg";
+import elektrozrouti_img from "./assets/elektrozrouti.svg";
+import exekutor_img from "./assets/exekutor.svg";
+import ministr_img from "./assets/ministr.png";
+import znatese_img from "./assets/znatese.svg";
+import investice_img from "./assets/investice.svg";
+import { useState } from "react";
 
-function splitRec(input: string): [string, string] {
-    const trimmed = input.trim();
-    const words = trimmed.split(' ').filter(word => word.length > 0);
 
-    if (words.length <= 3) {
-        return ['', trimmed];
-    }
-
-    const lastThreeWords = words.slice(-3).join(' ');
-    const start = words.slice(0, -3).join(' ');
-
-    return [start, lastThreeWords];
-}
 
 function Recomendations() {
-    const { configData,
-        score,
-        roundsCount,
-        wrongAnswers,
-        shuffledQuestions
-    } = useGameLoop();
-    let selected_recomendations: [string, string, string][] = [];
+    const { configData } = useGameLoop();
+    const banners = [
+        [elektrozrouti_img, configData.powerConsumptionURL],
+        [exekutor_img, configData.executorURL],
+        [ministr_img, configData.ministerURL],
+        [znatese_img, configData.guessGameURL],
+        [investice_img, configData.investingURL]]
 
-    if (score == roundsCount) {
-        selected_recomendations.push([...splitRec(configData.allCorrect), configData.allCorrectURL])
-    } else if (score < 7) {
-        selected_recomendations.push([...splitRec(configData.powerConsumption), configData.powerConsumptionURL])
-        selected_recomendations.push([...splitRec(configData.reclamation), configData.reclamationURL])
-        selected_recomendations.push([...splitRec(configData.executor), configData.executorURL])
-    } else {
-        wrongAnswers.forEach(item => (
-            selected_recomendations.push([...splitRec(shuffledQuestions[item].recommendation),
-            shuffledQuestions[item].recommendationURL])
-        ))
-    }
+    const [copied, setCopied] = useState(false);
+
+    const handleShare = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: 'Quiz Link',
+                    url: configData.quizLink,
+                });
+            } catch (err) {
+                console.log('Share cancelled or failed');
+            }
+        } else {
+            await navigator.clipboard.writeText(configData.quizLink);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1500);
+        }
+    };
 
     return (
-        <div className="flex flex-col h-screen-dvh text-figma-black bg-white">
-            <img className="hidden xl:block w-28 fixed right-8 top-5" src={logo} alt="logo" />
+        <div className="flex flex-col min-h-full text-figma-black">
             <div className="flex flex-col h-screen-dvh">
                 <div className="flex flex-col w-full mx-auto">
 
-                    <div className={`py-16 xl:py-24 bg-csas-blue px-5`}>
-                        <div className="mx-auto max-h-[50rem]  md:w-[40rem] text-figma-white text-[2rem] text-center font-bold">
-                            <h1>{configData.recommendation}</h1>
+                    <div className={`pt-16 mb-3 px-5`}>
+                        <div className="mx-auto max-h-[50rem]  md:w-[21rem] text-figma-white  text-center ">
+                            <h1 className="font-bold text-[2rem] mb-4">{configData.recommendationTitle}</h1>
+                            <h2>{configData.recommendationText}</h2>
                         </div>
                     </div>
 
-                    <div className="md:mx-auto max-h-[50rem]  md:w-[40rem] mx-2 p-2 mb-6">
-                        {selected_recomendations.map(item => (
+                    <div className="md:mx-auto  md:w-[40rem] mx-2 p-2 mb-6">
+                        {banners.map(item => (
                             <div key={item[1]} className="flex flex-col items-center">
-                                <p className="md:mx-auto md:w-[40rem] mx-4 mt-6 mb-1 text-xl text-center">
-                                    {item[0]}
-                                </p>
-                                <a href={item[2]} className="underline md:mx-auto md:w-[40rem] mx-4 mb-3 text-xl text-center font-bold">
-                                    {item[1]}
+                                <a href={item[1]}>
+                                    <img className="my-4" src={item[0]} alt="Doporuceni na vzdelavani" />
                                 </a>
                             </div>
                         ))}
                     </div>
 
-                    <a href={configData.skoalaLink} className="md:mx-auto md:w-[40rem] mx-8 p-2 mb-3 mt-2 font-extrabold text-xl text-center">
-                        {configData.shareToOthers}
-                    </a>
+                    <button
+                        onClick={handleShare}
+                        className="md:mx-auto md:w-[40rem] mx-8 p-2 mb-3 mt-2 font-extrabold text-xl text-center text-figma-white cursor-pointer hover:opacity-80 transition-all"
+                    >
+                        {copied ? configData.copiedText : `-> ${configData.shareToOthers}`}
+                    </button>
 
-                    <img className="xl:hidden mx-auto w-28 mb-8 mt-6" src={logo_black} alt="logo" />
+                    <img className="mx-auto w-28 mb-8 mt-6" src={logo} alt="logo" />
+
+                    <p className="text-center mx-auto text-figma-white mb-8 text-lg max-w-60">{configData.helpToSpreadText}</p>
                 </div>
             </div>
         </div>
@@ -77,19 +84,26 @@ function Recomendations() {
 
 function Resutls() {
     const { setShowResults } = useGame();
-    const { configData, tresholdData, score } = useGameLoop();
-    const validTreshold = tresholdData
+    const { configData, tresholdData, score, roundsCount } = useGameLoop();
+    const filteredTreshold = tresholdData
         .filter(obj => obj.thresholdValue > score - 1)
+    const validTreshold = filteredTreshold
         .sort((a, b) => a.thresholdValue - b.thresholdValue)[0] || null;
+    const badges = [badge_0, badge_1, badge_2, badge_3, badge_4, badge_5]
+    const badge_index = badges.length - filteredTreshold.length
 
     return (
         <div className="flex flex-col justify-center h-screen-dvh bg-csas-blue text-figma-white">
             <div className="flex flex-col justify-between h-screen-dvh max-h-[50rem]">
                 <div>
-                    <h1 className="font-bold mt-12 text-center text-[5.17rem]">{score}</h1>
-                    <h2 className="text-center text-2xl">{configData.textGameover}</h2>
+                    <h1 className="mt-12 text-center font-bold">
+                        <span className="text-[4rem]">{score}/</span>
+                        <span className="text-[1.5rem]">{roundsCount}</span>
+                    </h1>
+                    <h2 className="text-center text-[1rem] lg:text-xl font-bold">{configData.textGameover}</h2>
                 </div>
-                <h2 className="font-bold mt-10 sm:mt-4 lg:mt-12 text-center text-4xl max-w-96 mx-auto px-2">
+                <img className="w-56 mx-auto mt-4" src={badges[badge_index]} alt="Odznak" />
+                <h2 className="font-bold mt-6 sm:mt-4  text-center text-4xl max-w-96 mx-auto px-2">
                     {validTreshold.thresholdTexts[0]}
                 </h2>
                 <h2 className="mt-10 sm:mt-4 lg:mt-12 text-center text-xl max-w-96 mx-auto px-2">
