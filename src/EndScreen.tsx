@@ -68,7 +68,7 @@ function Recomendations() {
 
                     <button
                         onClick={handleShare}
-                        className="md:mx-auto md:w-[40rem] mx-8 p-2 mb-3 mt-2 font-extrabold text-xl text-center text-figma-white cursor-pointer hover:opacity-80 transition-all"
+                        className="md:mx-auto md:w-[40rem] mx-8 p-2 mb-3 mt-2 font-bold text-xl text-center text-figma-white cursor-pointer hover:opacity-80 transition-all"
                     >
                         {copied ? configData.copiedText : `-> ${configData.shareToOthers}`}
                     </button>
