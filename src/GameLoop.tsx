@@ -69,8 +69,7 @@ function RoundEnd() {
                             console.log(wrongAnswers)
                             setWrongAnswers([...wrongAnswers, round - 1])
                         }
-                        // if (round === roundsCount) setEndGame(true)
-                        if (round === 1) setEndGame(true)
+                        if (round === roundsCount) setEndGame(true)
                     }}>
                     {"->"} {configData.buttonNext}
                 </button>
