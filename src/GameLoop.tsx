@@ -25,7 +25,7 @@ function RoundEnd() {
     return (
         <div className="flex flex-col h-screen-dvh text-figma-black bg-white">
             <img className="hidden xl:block w-28 fixed right-8 top-5" src={logo} alt="logo" />
-            <div className="flex flex-col h-screen-dvh">
+            <div className="flex flex-col h-screen-dvh max-h-[50rem]">
                 <div className="flex flex-col w-full mx-auto">
 
                     <div className={`lg:pt-12 py-2 bg-${currColor} px-5`}>
@@ -66,7 +66,6 @@ function RoundEnd() {
                         setRound(round + 1)
                         if (isCorrect) setScore(score + 1)
                         else {
-                            console.log(wrongAnswers)
                             setWrongAnswers([...wrongAnswers, round - 1])
                         }
                         if (round === roundsCount) setEndGame(true)
@@ -98,7 +97,7 @@ function Question() {
     return (
         <div className="flex flex-col h-screen-dvh text-figma-black bg-white">
             <img className="hidden xl:block w-28 fixed right-8 top-5" src={logo} alt="logo" />
-            <div className="flex flex-col h-screen-dvh">
+            <div className="flex flex-col h-screen-dvh max-h-[50rem]">
                 <div className="flex flex-col w-full">
 
                     <div className={`lg:pt-12 py-2 bg-${currColor} px-5`}>
