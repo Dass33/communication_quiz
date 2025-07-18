@@ -6,7 +6,11 @@ export async function getJsObjects() {
     }
 
     // Otherwise, fetch the data
-    const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRBLSMgRmLCAmgG-IgsB5ISXD0kUmQD9kBebqqq8kRt0pvvjM6_hCAwGjp8x0BopzM8mHpebzSDYeZ6/pub?gid=684094629&single=true&output=tsv';
+    // const url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRBLSMgRmLCAmgG-IgsB5ISXD0kUmQD9kBebqqq8kRt0pvvjM6_hCAwGjp8x0BopzM8mHpebzSDYeZ6/pub?gid=684094629&single=true&output=tsv';
+
+    // use this to build final version
+    const url = '/public-quiz/configs/data.tsv';
+
 
     const response = await fetch(url);
 

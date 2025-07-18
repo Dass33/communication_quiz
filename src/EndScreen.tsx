@@ -59,7 +59,7 @@ function Recomendations() {
                     <div className="md:mx-auto  md:w-[40rem] mx-2 p-2 mb-6">
                         {banners.map(item => (
                             <div key={item[1]} className="flex flex-col items-center">
-                                <a href={item[1]}>
+                                <a href={item[1]} id="end-screen-link">
                                     <img className="my-4" src={item[0]} alt="Doporuceni na vzdelavani" />
                                 </a>
                             </div>
@@ -96,8 +96,8 @@ function Resutls() {
         <div className="flex flex-col justify-center h-screen-dvh bg-csas-blue text-figma-white">
             <div className="flex flex-col justify-between h-screen-dvh max-h-[50rem]">
                 <div>
-                    <h1 className="mt-12 text-center font-bold">
-                        <span className="text-[4rem]">{score}/</span>
+                    <h1 className="mt-12 text-center font-bold" id="end-screen-score" data-score={score} data-rounds={roundsCount}>
+                        <span className="text-[4rem]" >{score}/</span>
                         <span className="text-[1.5rem]">{roundsCount}</span>
                     </h1>
                     <h2 className="text-center text-[1rem] lg:text-xl font-bold">{configData.textGameover}</h2>
