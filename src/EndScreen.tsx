@@ -28,20 +28,9 @@ function Recomendations() {
     const [copied, setCopied] = useState(false);
 
     const handleShare = async () => {
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: 'Quiz Link',
-                    url: configData.quizLink,
-                });
-            } catch (err) {
-                console.log('Share cancelled or failed');
-            }
-        } else {
-            await navigator.clipboard.writeText(configData.quizLink);
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1500);
-        }
+        await navigator.clipboard.writeText(configData.quizLink);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
     };
 
     return (
@@ -56,7 +45,7 @@ function Recomendations() {
                         </div>
                     </div>
 
-                    <div className="md:mx-auto  md:w-[40rem] mx-2 p-2 mb-6">
+                    <div className="md:mx-auto md:w-[40rem] mx-2 p-2 mb-6">
                         {banners.map(item => (
                             <div key={item[1]} className="flex flex-col items-center">
                                 <a href={item[1]} id="end-screen-link">
